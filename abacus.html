@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ABACUS Result</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eef3f8;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 450px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 15px #bbb;
+}
+
+h1 {
+    text-align: center;
+    color: #1455a0;
+}
+
+.subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    background: #1455a0;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 17px;
+}
+
+.result {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    background: #f5f8fc;
+    border-radius: 10px;
+}
+
+.result h2 {
+    text-align: center;
+}
+
+.result p {
+    margin: 12px 0;
+}
+
+.eligible {
+    color: green;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 15px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>ABACUS</h1>
+
+<div class="subtitle">
+Panchayat Level Examination Result
+</div>
+
+
+<label>Register Number</label>
+
+<input
+type="text"
+id="regNo"
+placeholder="Enter Register Number"
+>
+
+
+<label>Date of Birth</label>
+
+<input
+type="date"
+id="dob"
+>
+
+
+<button onclick="checkResult()">
+VIEW RESULT
+</button>
+
+
+<div id="error" class="error"></div>
+
+
+<div id="result" class="result">
+
+<h2>RESULT</h2>
+
+<p>
+<b>Name:</b>
+<span id="name"></span>
+</p>
+
+<p>
+<b>Class:</b>
+<span id="className"></span>
+</p>
+
+<p>
+<b>School:</b>
+<span id="school"></span>
+</p>
+
+<p>
+<b>Level:</b>
+<span id="level"></span>
+</p>
+
+<p>
+<b>Rank:</b>
+<span id="rank"></span>
+</p>
+
+<div id="selection" class="eligible"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* STUDENT DATA */
+
+const students = [
+
+    {
+        regNo: "23019",
+        dob: "2014-09-10",
+        name: "അൻസഫ്",
+        className: "6",
+        school: "GVHSS അലനല്ലൂർ",
+        level: "Panchayat Level",
+        rank: 1
+    },
+
+    {
+        regNo: "23014",
+        dob: "2014-07-20",
+        name: "ആദിത്യൻ",
+        className: "6",
+        school: "GVHSS അലനല്ലൂർ",
+        level: "Panchayat Level",
+        rank: 3
+    }
+
+];
+
+
+function checkResult() {
+
+    const regNo =
+        document.getElementById("regNo").value.trim();
+
+    const dob =
+        document.getElementById("dob").value;
+
+
+    const student = students.find(function(student) {
+
+        return (
+            student.regNo === regNo &&
+            student.dob === dob
+        );
+
+    });
+
+
+    const result =
+        document.getElementById("result");
+
+    const error =
+        document.getElementById("error");
+
+
+    if (!student) {
+
+        result.style.display = "none";
+
+        error.innerHTML =
+        "Invalid Register Number or Date of Birth.";
+
+        return;
+
+    }
+
+
+    error.innerHTML = "";
+
+
+    document.getElementById("name").innerText =
+        student.name;
+
+    document.getElementById("className").innerText =
+        student.className;
+
+    document.getElementById("school").innerText =
+        student.school;
+
+    document.getElementById("level").innerText =
+        student.level;
+
+    document.getElementById("rank").innerText =
+        student.rank;
+
+
+    if (student.rank <= 5) {
+
+        document.getElementById("selection").innerHTML =
+        "✓ SELECTED<br><br>" +
+        "ELIGIBLE FOR DISTRICT LEVEL";
+
+    } else {
+
+        document.getElementById("selection").innerHTML =
+        "NOT SELECTED<br><br>" +
+        "NOT ELIGIBLE FOR DISTRICT LEVEL";
+
+    }
+
+
+    result.style.display = "block";
+
+}
+
+</script>
+
+</body>
+
+</html>
